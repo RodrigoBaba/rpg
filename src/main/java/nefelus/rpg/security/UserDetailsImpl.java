@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import nefelus.rpg.model.User;
+import nefelus.rpg.model.UserModel;
 
 public class UserDetailsImpl implements UserDetails{
 
@@ -21,7 +21,7 @@ public class UserDetailsImpl implements UserDetails{
 		super();
 	}
 
-	public UserDetailsImpl(User user) {
+	public UserDetailsImpl(UserModel user) {
 		super();
 		this.email = user.getEmail();
 		this.password = user.getPassword();

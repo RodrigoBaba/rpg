@@ -16,7 +16,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import nefelus.rpg.dto.UserCredentialsDTO;
 import nefelus.rpg.dto.UserLoginDTO;
-import nefelus.rpg.model.User;
+import nefelus.rpg.model.UserModel;
 import nefelus.rpg.repository.UserRepository;
 
 @Service
@@ -26,8 +26,8 @@ public class UserService {
 	@Autowired
 	private UserRepository repository;
 	
-	public ResponseEntity<User> registerUser(User user){
-		Optional<User> optional = repository.findByEmail(user.getEmail());
+	public ResponseEntity<UserModel> registerUser(UserModel user){
+		Optional<UserModel> optional = repository.findByEmail(user.getEmail());
 		
 		if(optional.isEmpty()) {
 			user.setPassword(encryptPassword(user.getPassword()));
@@ -37,7 +37,7 @@ public class UserService {
 		}		
 	}
 	
-	public Optional<User> cadastrarUsuario(User usuario) {
+	public Optional<UserModel> cadastrarUsuario(UserModel usuario) {
 		if(repository.findByEmail(usuario.getEmail()).isPresent()) 
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Usuário já existe!", null);
 		

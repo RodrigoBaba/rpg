@@ -20,7 +20,7 @@ import org.springframework.web.server.ResponseStatusException;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import nefelus.rpg.dto.UserCredentialsDTO;
 import nefelus.rpg.dto.UserLoginDTO;
-import nefelus.rpg.model.User;
+import nefelus.rpg.model.UserModel;
 import nefelus.rpg.repository.UserRepository;
 import nefelus.rpg.service.UserService;
 
@@ -35,8 +35,8 @@ public class UserController {
 	private UserService service;
 	
 	@GetMapping("/all")
-	public ResponseEntity<List<User>> getAll(){
-		List<User> list = repository.findAll();
+	public ResponseEntity<List<UserModel>> getAll(){
+		List<UserModel> list = repository.findAll();
 		
 		if(list.isEmpty()) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Não existe nenhum usuário na lista!");
@@ -46,7 +46,7 @@ public class UserController {
 	}
 	
 	@GetMapping("/get/{id}")
-	public ResponseEntity<User> getById(@PathVariable(value = "id") Long id){
+	public ResponseEntity<UserModel> getById(@PathVariable(value = "id") Long id){
 		return repository.findById(id).map(resp -> ResponseEntity.status(200).body(resp))
 				.orElseGet(() -> {
 					throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Id não encontrado!");
@@ -54,14 +54,14 @@ public class UserController {
 	}
 	
 	@PostMapping("/cadastrar")
-	public ResponseEntity<User> postUsuario(@Valid @RequestBody User usuario){
+	public ResponseEntity<UserModel> postUsuario(@Valid @RequestBody UserModel usuario){
 		return service.cadastrarUsuario(usuario)
 				.map(resp -> ResponseEntity.status(HttpStatus.CREATED).body(resp))
 				.orElse(ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
 	}
 	
 	@PostMapping("/register")
-	public ResponseEntity<User> register(@Valid @RequestBody User user){
+	public ResponseEntity<UserModel> register(@Valid @RequestBody UserModel user){
 		return service.registerUser(user);
 	}
 	
@@ -72,7 +72,7 @@ public class UserController {
 	
 	@DeleteMapping("delete/{id}")
 	public ResponseEntity<?> deleteUser(@PathVariable(value = "id") Long id){
-		Optional<User> optional = repository.findById(id);
+		Optional<UserModel> optional = repository.findById(id);
 		
 		if(optional.isPresent()) {
 			repository.deleteById(id);

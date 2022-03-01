@@ -8,7 +8,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import nefelus.rpg.model.User;
+import nefelus.rpg.model.UserModel;
 import nefelus.rpg.repository.UserRepository;
 
 @Service
@@ -18,7 +18,7 @@ public class UserDetailsServiceImp implements UserDetailsService{
 	
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-		Optional<User> user = userRepository.findByEmail(email);
+		Optional<UserModel> user = userRepository.findByEmail(email);
 		
 		if(user.isPresent()) {
 			return new UserDetailsImpl(user.get());

@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import nefelus.rpg.dto.UserCredentialsDTO;
 import nefelus.rpg.dto.UserLoginDTO;
 import nefelus.rpg.model.UserModel;
@@ -33,6 +33,7 @@ public class UserController {
 	private UserRepository repository;
 	@Autowired
 	private UserService service;
+
 	
 	@GetMapping("/all")
 	public ResponseEntity<List<UserModel>> getAll(){
@@ -53,17 +54,11 @@ public class UserController {
 				});
 	}
 	
-	@PostMapping("/cadastrar")
-	public ResponseEntity<UserModel> postUsuario(@Valid @RequestBody UserModel usuario){
-		return service.cadastrarUsuario(usuario)
-				.map(resp -> ResponseEntity.status(HttpStatus.CREATED).body(resp))
-				.orElse(ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
-	}
-	
 	@PostMapping("/register")
-	public ResponseEntity<UserModel> register(@Valid @RequestBody UserModel user){
+	public ResponseEntity<UserModel> postUsuario(@Valid @RequestBody UserModel user){
 		return service.registerUser(user);
 	}
+
 	
 	@PostMapping("/login")
 	public ResponseEntity<UserCredentialsDTO> login(@Valid @RequestBody UserLoginDTO user){

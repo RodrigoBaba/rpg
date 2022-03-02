@@ -37,14 +37,6 @@ public class UserService {
 		}		
 	}
 	
-	public Optional<UserModel> cadastrarUsuario(UserModel usuario) {
-		if(repository.findByEmail(usuario.getEmail()).isPresent()) 
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Usuário já existe!", null);
-		
-		usuario.setPassword(encryptPassword(usuario.getPassword()));
-		return Optional.of(repository.save(usuario));
-	}
-	
 	public ResponseEntity<UserCredentialsDTO> credentials(@Valid UserLoginDTO user){
 		return repository.findByEmail(user.getEmail()).map(resp -> {
 			
@@ -76,7 +68,7 @@ public class UserService {
 	
 	private String generatorBasicToken(String email, String password) {
 		String structure = email + ":" + password;
-		byte[] structureBase64 = Base64.encodeBase64(structure.getBytes(Charset.forName("US-ASCI")));
+		byte[] structureBase64 = Base64.encodeBase64(structure.getBytes(Charset.forName("US-ASCII")));
 		return "Basic " + new String(structureBase64);
 	}
 }

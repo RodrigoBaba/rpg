@@ -1,9 +1,11 @@
 package nefelus.rpg.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -17,17 +19,17 @@ public class UserModel {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@NotBlank
 	@Size(min = 2, message = "Mínimo de caracteres é 2")
-	private String name;
+	private String user;
 	
-	@NotBlank(message = "O email deve conter @")
 	@Email
 	private String email;
 	
-	@NotBlank
 	@Size(min = 6, message = "Mínimo de caracteres é 6")
 	private String password;
+	
+	@OneToOne(cascade = CascadeType.REMOVE)
+	private CharacterModel characterModel;
 
 	public Long getId() {
 		return id;
@@ -37,12 +39,12 @@ public class UserModel {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public String getUser() {
+		return user;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setUser(String user) {
+		this.user = user;
 	}
 
 	public String getEmail() {
@@ -59,5 +61,13 @@ public class UserModel {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}	
+
+	public CharacterModel getCharacterModel() {
+		return characterModel;
+	}
+
+	public void setCharacterModel(CharacterModel characterModel) {
+		this.characterModel = characterModel;
 	}	
 }

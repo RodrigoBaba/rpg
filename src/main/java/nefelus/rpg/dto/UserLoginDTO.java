@@ -1,20 +1,20 @@
 package nefelus.rpg.dto;
 
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 public class UserLoginDTO {
-
-	private @NotBlank @Email String email;
+	
+	private @NotBlank String userLogin;
 	
 	private @NotBlank String password;
 
-	public String getEmail() {
-		return email;
+		
+	public String getUserLogin() {
+		return userLogin;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setUserLogin(String userLogin) {
+		this.userLogin = userLogin;
 	}
 
 	public String getPassword() {
@@ -23,5 +23,6 @@ public class UserLoginDTO {
 
 	public void setPassword(String password) {
 		this.password = password;
-	}	
+	}
+	
 }

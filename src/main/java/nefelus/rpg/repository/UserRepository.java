@@ -11,4 +11,6 @@ import nefelus.rpg.model.UserModel;
 public interface UserRepository extends JpaRepository<UserModel, Long>{
 
 	public Optional<UserModel> findByEmail(String email);
+	
+	public Optional<UserModel> findByUser(String user);
 }
